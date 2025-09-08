@@ -4,17 +4,40 @@
 <meta charset="UTF-8">
 <title>PLCoins App</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+  }
+  #balance-box {
+    display: inline-block;
+    background-color: #87CEFA; /* голубой */
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+</style>
 </head>
 <body>
-<h1 id="username"></h1>
-<p id="balance"></p>
+<h1 id="username">Загрузка...</h1>
+<div id="balance-box">💰 Баланс: 0 PLcoins</div>
 
 <script>
 const tg = window.Telegram.WebApp;
-const user = tg.initDataUnsafe.user;
-document.getElementById('username').innerText = `👤 ${user.username || user.first_name}`;
-document.getElementById('balance').innerText = `💰 Баланс: 0 PLcoins`;
 tg.ready();
+
+const user = tg.initDataUnsafe.user;
+if(user){
+    document.getElementById('username').innerText = `👤 ${user.username || user.first_name}`;
+}
+
+// Статический баланс из Telegram бота
+const balance = tg.initDataUnsafe?.user?.balance || 0;
+document.getElementById('balance-box').innerText = `💰 Баланс: ${balance} PLcoins`;
 </script>
 </body>
 </html>
